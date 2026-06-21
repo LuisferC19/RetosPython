@@ -27,7 +27,7 @@ class Inventario:
         print("_ _ _ _ _ __ _ _ __ _ _ _ __ _ _ _ ")
         print(" Producto agregado correctamente  \n")
 
-    # Funcion para mostrar el inventario
+      # Funcion para mostrar el inventario
     def mostrar_inventario(self):
         if len(self.inventario) == 0:#Validamos si el inventario esta vacio
             print("El inventario está vacío\n")
@@ -50,4 +50,6 @@ class Inventario:
         print("2. Mostrar inventario")
         print("3. Vender producto")
         print("4. Salir")
+
+
 
