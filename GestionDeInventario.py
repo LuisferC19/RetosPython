@@ -52,3 +52,37 @@ class Inventario:
 
 
 
+    #Fucion para vender producto
+    def vender_producto(self):
+        nombre = input("Ingrese el nombre del producto a vender: ")#ingresamos el nombre del producto a vender
+
+        # Usamos filter para busca el producto por nombre que sea el mismo que en la funcion "agregar_producto"
+        ListaResultado = list(filter(lambda producto: producto[0] == nombre, self.inventario))
+
+        # Si no se encontró ningún producto con ese nombre
+        if len(ListaResultado) == 0:
+            print("El producto no existe en el inventario\n")
+            return
+
+        producto = ListaResultado[0]   # Tomamos el producto encontrado
+
+        cantidad_vender = int(input("Ingrese la cantidad a vender: "))#Ingresamos la cantidad que venderemos del producto
+
+        if cantidad_vender <= 0:#Validamos la cantidad ingresada
+            print("La cantidad tiene que ser mayor a 0\n")
+            return
+
+        if cantidad_vender > producto[1]:
+            print("No hay suficientes productos en el stock.\n Solo quedan " + str(producto[1]) + " unidades\n")
+            return
+
+        producto[1] = producto[1] - cantidad_vender # Se resta la cantida vendida del producto que esta en inventario
+
+        if producto[1] == 0:# En caso que se venda toda la cantidad del produto se elimina de la Lista "producto"
+            self.inventario.remove(producto)
+            print("Venta realizada. El producto se agotó y fue eliminado del inventario.\n")
+        else:
+            print("Venta realizada. Quedan " + str(producto[1]) + " unidades.\n")
+
+
+
