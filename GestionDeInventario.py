@@ -27,7 +27,7 @@ class Inventario:
         print("_ _ _ _ _ __ _ _ __ _ _ _ __ _ _ _ ")
         print(" Producto agregado correctamente  \n")
 
-     # Funcion para mostrar el inventario
+    # Funcion para mostrar el inventario
     def mostrar_inventario(self):
         if len(self.inventario) == 0:#Validamos si el inventario esta vacio
             print("El inventario está vacío\n")
@@ -42,6 +42,38 @@ class Inventario:
         for linea in ListaMostrar:
             print(linea)
 
+    #Fucion para vender producto
+    def vender_producto(self):
+        nombre = input("Ingrese el nombre del producto a vender: ")#ingresamos el nombre del producto a vender
+
+        # Usamos filter para busca el producto por nombre que sea el mismo que en la funcion "agregar_producto"
+        ListaResultado = list(filter(lambda producto: producto[0] == nombre, self.inventario))
+
+        # Si no se encontró ningún producto con ese nombre
+        if len(ListaResultado) == 0:
+            print("El producto no existe en el inventario\n")
+            return
+
+        producto = ListaResultado[0]   # Tomamos el producto encontrado
+
+        cantidad_vender = int(input("Ingrese la cantidad a vender: "))#Ingresamos la cantidad que venderemos del producto
+
+        if cantidad_vender <= 0:#Validamos la cantidad ingresada
+            print("La cantidad tiene que ser mayor a 0\n")
+            return
+
+        if cantidad_vender > producto[1]:
+            print("No hay suficientes productos en el stock.\n Solo quedan " + str(producto[1]) + " unidades\n")
+            return
+
+        producto[1] = producto[1] - cantidad_vender # Se resta la cantida vendida del producto que esta en inventario
+
+        if producto[1] == 0:# En caso que se venda toda la cantidad del produto se elimina de la Lista "producto"
+            self.inventario.remove(producto)
+            print("Venta realizada. El producto se agotó y fue eliminado del inventario.\n")
+        else:
+            print("Venta realizada. Quedan " + str(producto[1]) + " unidades.\n")
+
     # Funcion para mostrar el menu principal
     def mostrar_menu(self):
         print("_ _ _ _ _Gestion De Inventario_ _ _ _ _")
@@ -51,4 +83,21 @@ class Inventario:
         print("4. Salir")
 
 
+if __name__ == "__main__":
+    sistema = Inventario()   # Creamos el objeto de la clase inventario
+    opcion = 0
 
+    while opcion != 4:
+        sistema.mostrar_menu()
+        opcion = int(input("Seleccione una opción: "))
+
+        if opcion == 1:
+            sistema.agregar_producto()
+        elif opcion == 2:
+            sistema.mostrar_inventario()
+        elif opcion == 3:
+            sistema.vender_producto()
+        elif opcion == 4:
+            print("Saliendo del sistema")
+        else:
+            print("Opción inválida, intente de nuevo.\n")
